@@ -1,4 +1,4 @@
-const { tulisPertanyaan, simpanContact } = require('./contacts');
+const { tulisPertanyaan, simpanContact } = require('./contacts1');
 
 const main = async () => {
     const nama = await tulisPertanyaan('Masukan Nama anda : ');

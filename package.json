@@ -1,0 +1,25 @@
+{
+  "name": "NodeJS_with_MongoDB",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app2.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/apipkurniawan/NodeJS_with_MongoDB.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/apipkurniawan/NodeJS_with_MongoDB/issues"
+  },
+  "homepage": "https://github.com/apipkurniawan/NodeJS_with_MongoDB#readme",
+  "dependencies": {
+    "chalk": "^4.1.1",
+    "validator": "^13.6.0",
+    "yargs": "^17.0.1"
+  }
+}
