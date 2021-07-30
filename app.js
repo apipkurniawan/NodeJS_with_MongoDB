@@ -1,9 +1,9 @@
 const express = require('express');
 const expressLayouts = require('express-ejs-layouts');
 const { body, validationResult, check } = require('express-validator');
-const session = require('express-session');
-const cookieParser = require('cookie-parser');
-const flash = require('connect-flash');
+// const session = require('express-session');
+// const cookieParser = require('cookie-parser');
+// const flash = require('connect-flash');
 
 const { addContact, deleteContact, updateContacts, loadContact, findContact, cekDuplikat } = require('./utils/contacts');
 
@@ -13,20 +13,21 @@ const port = 3000;
 app.set('view engine', 'ejs');
 app.use(expressLayouts); // third party middleware
 app.use(express.static('public')); // built-in middleware
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true })); // utk proses simpan
 
 // konfigurasi flash
-app.use(cookieParser('secret'));
-app.use(
-    session({
-        cookie: { maxAge: 6000 },
-        secret: 'secret',
-        resave: true,
-        saveUninitialized: true
-    })
-);
-app.use(flash);
+// app.use(cookieParser('secret'));
+// app.use(
+//     session({
+//         cookie: { maxAge: 6000 },
+//         secret: 'secret',
+//         resave: true,
+//         saveUninitialized: true,
+//     })
+// );
+// app.use(flash);
 
+// halaman home
 app.get('/', (req, res) => {
     const mahasiswa = [
         {
@@ -44,9 +45,9 @@ app.get('/', (req, res) => {
         mahasiswa,
         title: 'Halaman Home'
     });
-    console.log('ini halaman home');
 });
 
+// halaman about
 app.get('/about', (req, res) => {
     res.render('about', {
         title: 'Halaman About',
@@ -54,16 +55,18 @@ app.get('/about', (req, res) => {
     });
 })
 
+// halaman contact
 app.get('/contact', (req, res) => {
     const contacts = loadContact();
     res.render('contact', {
         title: 'Halaman Contact',
         layout: 'layouts/main-layout',
-        contacts,
-        msg: req.flash('msg')
+        contacts
+        // msg: req.flash('msg')
     });
 })
 
+// halaman tambah data
 app.get('/contact/add', (req, res) => {
     res.render('add-contact', {
         title: 'Form Tambah Data Contact',
@@ -71,6 +74,7 @@ app.get('/contact/add', (req, res) => {
     });
 })
 
+// proses tambah data
 app.post('/contact', [
     body('nama').custom((value) => {
         const duplikat = cekDuplikat(value);
@@ -93,7 +97,7 @@ app.post('/contact', [
     } else {
         addContact(req.body);
         // kirimkan flash message
-        req.flash('msg', 'Data contact berhasil ditambahkan!');
+        // req.flash('msg', 'Data contact berhasil ditambahkan!');
         res.redirect('/contact');
     }
 })
@@ -106,12 +110,12 @@ app.get('/contact/delete/:nama', (req, res) => {
         res.send('<h1>404</h1>');
     } else {
         deleteContact(req.params.nama);
-        req.flash('msg', 'Data contact berhasil dihapus!');
+        // req.flash('msg', 'Data contact berhasil dihapus!');
         res.redirect('/contact');
     }
 });
 
-// halaman form ubah data contact
+// halaman ubah data contact
 app.get('/contact/edit/:nama', (req, res) => {
     const contact = findContact(req.params.nama);
     res.render('edit-contact', {
@@ -145,11 +149,12 @@ app.post('/contact/update', [
     } else {
         updateContacts(req.body);
         // kirimkan flash message
-        req.flash('msg', 'Data contact berhasil diubah!');
+        // req.flash('msg', 'Data contact berhasil diubah!');
         res.redirect('/contact');
     }
 })
 
+// halaman detail contact
 app.get('/contact/:nama', (req, res) => {
     const contact = findContact(req.params.nama);
     res.render('detail', {
@@ -159,8 +164,7 @@ app.get('/contact/:nama', (req, res) => {
     });
 })
 
-// app.delete('/contact/: nama')
-
+// halaman sembarang
 app.use('/', (req, res) => {
     res.status(404)
     res.send('<h1>Page Not Found</h1>')
