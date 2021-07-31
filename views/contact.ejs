@@ -11,6 +11,7 @@
                         <th scope="col">No.</th>
                         <th scope="col">Nama</th>
                         <th scope="col">No. Hp</th>
+                        <th scope="col">Email</th>
                         <th scope="col">Aksi</th>
                     </tr>
                 </thead>
@@ -34,6 +35,9 @@
                                     </td>
                                     <td>
                                         <%= contact.nohp %>
+                                    </td>
+                                    <td>
+                                        <%= contact.email %>
                                     </td>
                                     <td>
                                         <a href="/contact/<%= contact.nama %>"
